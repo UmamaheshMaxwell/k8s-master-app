@@ -3,37 +3,41 @@ kind: Ingress
 metadata:
   name: k8s-ingress
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
+    # Authentication annotations
+    nginx.ingress.kubernetes.io/auth-url: "https://fastapi-auth.main-sequence.app/auth"
 spec:
   ingressClassName: nginx
   tls:
-  - hosts:
-    - devopswithkube.com
-    secretName: hello-app-tls
+    - hosts:
+        - devopswithkube.com
+      secretName: devops-with-kube-tls
   rules:
-  - host: devopswithkube.com
-    http:
-      paths:
-      - path: /nginx(/|$)(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx
-            port:
-              number: 80
-      - path: /httpd(/|$)(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: httpd
-            port:
-              number: 80
-      - path: /(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx
-            port:
-              number: 80
+    - host: devopswithkube.com
+      http:
+        paths:
+          - path: /nginx(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+          - path: /httpd(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: httpd
+                port:
+                  number: 80
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80

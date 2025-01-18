@@ -1,0 +1,27 @@
+replicaCount: 2
+
+image:
+  repository: nginx
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - helm.devopswithkube.com
+  path: /
+  pathType: Prefix
+  tls:
+    - secretName: nginx-tls
+      hosts:
+        - helm.devopswithkube.com
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
