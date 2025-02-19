@@ -1,0 +1,24 @@
+Install istio
+------------------------------------------------------------------------------
+helm repo add istio https://istio-release.storage.googleapis.com/charts
+helm repo update
+helm install istio-base istio/base -n istio-system --set defaultRevision=default --create-namespace
+
+helm ls -n istio-system
+helm install istiod istio/istiod -n istio-system --wait
+helm ls -n istio-system
+helm status istiod -n istio-system
+kubectl get deployments -n istio-system --output wide
+
+(Optional) Install an ingress gateway:
+
+kubectl create namespace istio-ingress
+helm install istio-ingress istio/gateway -n istio-ingress --wait
+
+Setup istioctl
+------------------------------------------------------------------------------
+Invoke-WebRequest -Uri "https://github.com/istio/istio/releases/download/1.16.0/istio-1.16.0-win.zip" -OutFile "istio-1.16.0-win.zip"
+Expand-Archive -Path "istio-1.16.0-win.zip" -DestinationPath .
+Move-Item -Path ".\istio-1.16.0\bin\istioctl.exe" -Destination "C:\Windows\System32\"
+istioctl version
+

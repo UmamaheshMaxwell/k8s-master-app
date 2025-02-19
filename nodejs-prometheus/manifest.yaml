@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-prometheus-deployment
+  labels:
+    app: nodejs-prometheus
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs-prometheus
+  template:
+    metadata:
+      labels:
+        app: nodejs-prometheus
+    spec:
+      containers:
+      - name: nodejs-prometheus
+        image: 30160225/nodejs-prometheus-api:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-prometheus-service
+  labels:
+    app: nodejs-prometheus
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30080 # Specify the NodePort explicitly (between 30000-32767)
+  selector:
+    app: nodejs-prometheus
