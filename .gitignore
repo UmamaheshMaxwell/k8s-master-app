@@ -1,2 +1,4 @@
 credentials.json
 istio-1.16.0
+node_modules
+package-lock.json
