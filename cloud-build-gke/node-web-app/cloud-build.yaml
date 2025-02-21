@@ -1,11 +1,19 @@
 steps:
   # build the container image
-- name: "gcr.io/cloud-builders/docker"
-  args: ["build", "-t", "${_IMAGE}", "."]
+- id: Build the image
+  name: gcr.io/cloud-builders/docker
+  args:
+    - build
+    - -t
+    - {_IMAGE}
+    - .
 
-  # push container image
-- name: "gcr.io/cloud-builders/docker"
-  args: ["push", "${_IMAGE}"]
+# Push the built image to the container registry service
+- id: Push the image to container registry
+  name: gcr.io/cloud-builders/docker
+  args:
+    - push
+    - {_IMAGE}
 
   # deploy container image to GKE
 - name: "gcr.io/cloud-builders/gke-deploy"
