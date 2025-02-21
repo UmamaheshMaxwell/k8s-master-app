@@ -21,7 +21,7 @@ steps:
 - name: "gcr.io/cloud-builders/gke-deploy"
   args:
   - run
-  - --filename=cloud-build-gke/node-web-app/manifest.yaml
+  - --filename=${_FILE_NAME}
   - --image=${_IMAGE}
   - --location=${_REGION}
   - --cluster=${_CLUSTER_NAME}
@@ -32,6 +32,7 @@ substitutions:
   _APP_NAME: node-web-app
   _CLUSTER_NAME: gke-public-cluster
   _IMAGE: gcr.io/${PROJECT_ID}/${_APP_NAME}:${BUILD_ID}-${COMMIT_SHA}
+  _FILE_NAME: cloud-build-gke/node-web-app/manifest.yaml
 
 options:
   logging: CLOUD_LOGGING_ONLY
