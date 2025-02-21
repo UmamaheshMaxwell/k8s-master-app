@@ -5,7 +5,7 @@ steps:
   args:
     - build
     - -t
-    - {_IMAGE}
+    - ${_IMAGE}
     - .
 
 # Push the built image to the container registry service
@@ -13,7 +13,7 @@ steps:
   name: gcr.io/cloud-builders/docker
   args:
     - push
-    - {_IMAGE}
+    - ${_IMAGE}
 
   # deploy container image to GKE
 - name: "gcr.io/cloud-builders/gke-deploy"
@@ -29,10 +29,11 @@ substitutions:
   _REGION: us-central1 # The region where the cloud services are located.
   _APP_NAME: node-web-app
   _CLUSTER_NAME: gke-public-cluster
+  _IMAGE: gcr.io/$PROJECT_ID/${_APP_NAME}:${BUILD_ID}-${COMMIT_SHA}
 
 options:
   logging: CLOUD_LOGGING_ONLY
 
 # The structure of the built image
 images:
-  - gcr.io/$PROJECT_ID/${_APP_NAME}:${BUILD_ID}-${COMMIT_SHA}
+  - ${_IMAGE}
