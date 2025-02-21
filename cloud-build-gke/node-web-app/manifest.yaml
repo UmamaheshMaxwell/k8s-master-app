@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nodejs-app
-          image: gcr.io/my-project/node-web-app:latest   # Replace with your image (e.g., gcr.io/my-project/my-node-app:latest)
+          image: gcr.io/gke-projects-443614/node-web-app   # Replace with your image (e.g., gcr.io/my-project/my-node-app:latest)
           ports:
             - containerPort: 3000
           env:

@@ -28,7 +28,7 @@ steps:
 
 # Here are the substitution variables related to the services.
 substitutions:
-  _REGION: us-central1 # The region where the cloud services are located.
+  _REGION: us-east1-b # The region where the cloud services are located.
   _APP_NAME: node-web-app
   _CLUSTER_NAME: gke-public-cluster
   _IMAGE: gcr.io/${PROJECT_ID}/${_APP_NAME}:${BUILD_ID}-${COMMIT_SHA}
