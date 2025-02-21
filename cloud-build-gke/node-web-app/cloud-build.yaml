@@ -6,7 +6,9 @@ steps:
     - build
     - -t
     - ${_IMAGE}
-    - .
+    - -f
+    - cloud-build-gke/node-web-app/Dockerfile
+    - cloud-build-gke/node-web-app
 
 # Push the built image to the container registry service
 - id: Push the image to container registry
